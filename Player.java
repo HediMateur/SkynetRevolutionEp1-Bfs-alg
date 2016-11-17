@@ -5,11 +5,22 @@
  */
 package skynetrevolutionbfs;
 
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+
+import java.util.*;
+import java.io.*;
+import java.math.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ *
+ * @author Hedi Mateur
+ */
 class Node{
     int number;
     ArrayList<Node> childs;
@@ -71,45 +82,49 @@ class Bfs{
         return null;
     }
 }
-/**
- *
- * @author Hedi Mateur
- */
-public class SkynetRevolutionBfs {
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+//LINK TO THE PROBLEM : https://www.codingame.com/ide/621004200344cf077a64c74fc25de124b39679b
+class Player {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        int N=4;
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt(); // the total number of nodes in the level, including the gateways
         ArrayList<Node> nodes = new ArrayList<Node>();
         for(int i=0;i<N;i++)
             nodes.add(new Node(i));
-        int L=4;
-        int E=1;
-        nodes.get(1).addChild(nodes.get(3));
-        nodes.get(3).addChild(nodes.get(1));
-        nodes.get(2).addChild(nodes.get(3));
-        nodes.get(3).addChild(nodes.get(2));
-        nodes.get(0).addChild(nodes.get(1));
-        nodes.get(1).addChild(nodes.get(0));
-        nodes.get(0).addChild(nodes.get(2));
-        nodes.get(2).addChild(nodes.get(0));
-        
-        System.out.println(nodes.get(1).childs.get(1).number);
-        ArrayList<Node> goals = new ArrayList<Node>();
-        
-        goals.add(nodes.get(3));
-        
-        Bfs bfs = new Bfs(nodes.get(2),goals,nodes);
-        Node node = bfs.compute();
-        ArrayList<Node> path = new ArrayList<Node>();
-        path.add(node);
-        while(node.parent!=null&&node.number!=nodes.get(0).number){
-            node=node.parent;
-            path.add(node);
+        int L = in.nextInt(); // the number of links
+        int E = in.nextInt(); // the number of exit gateways
+        for (int i = 0; i < L; i++) {
+            int N1 = in.nextInt(); // N1 and N2 defines a link between these nodes
+            int N2 = in.nextInt();
+            nodes.get(N1).addChild(nodes.get(N2));
+            nodes.get(N2).addChild(nodes.get(N1));
         }
+        ArrayList<Node> goals = new ArrayList<Node>();
+        for (int i = 0; i < E; i++) {
+            goals.add(nodes.get(in.nextInt())); // the index of a gateway node
+        }
+
+        // game loop
+        while (true) {
+            int SI = in.nextInt(); // The index of the node on which the Skynet agent is positioned this turn
+            // Write an action using System.out.println()
+            // To debug: System.err.println("Debug messages...");
+            Bfs bfs = new Bfs(nodes.get(SI),goals,nodes);
+            Node node = bfs.compute();
+            ArrayList<Node> path = new ArrayList<Node>();
+            path.add(node);
+            while(node.parent!=null&&node.number!=nodes.get(SI).number){
+                node=node.parent;
+                path.add(node);
+                    
+            }
             System.out.println(path.get(path.size()-1).number+" "+path.get(path.size()-2).number);
+
+            // Example: 0 1 are the indices of the nodes you wish to sever the link between
+            
+        }
     }
 }
